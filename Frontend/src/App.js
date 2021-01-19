@@ -1,23 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { SinginView } from './routes/SinginView';
+import { Route, useHistory } from 'react-router-dom';
+
 
 function App() {
+
+  const history = useHistory();
+  const [state, setState] = useState({
+    username: null,
+    jwtToken: null,
+  })
+
+  useEffect(() => {
+    const jwtToken = localStorage.getItem("LS_JWT_TOKEN");
+    if (jwtToken) {
+      localStorage.setItem("LS_JWT_TOKEN");
+      setState({...state, jwtToken: jwtToken});
+      history.push("/memos");
+    } else {
+      history.push("/signin");
+    }
+  }, [])
+
+  const signOut = () => {
+    localStorage.removeItem("LS_JWT_TOKEN");
+  }
+  
+
   return (
+
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Route
+        path='/signin'
+        render={() => <SinginView/>}
+        />
     </div>
   );
 }
