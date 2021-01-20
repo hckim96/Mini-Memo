@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { SinginView } from './routes/SinginView';
+import { SigninView } from './routes/SigninView';
 import { Route, useHistory } from 'react-router-dom';
 
 
@@ -33,7 +33,7 @@ function App() {
     <div className="App">
       <Route
         path='/signin'
-        render={() => <SinginView/>}
+        render={() => <SigninView/>}
         />
     </div>
   );
