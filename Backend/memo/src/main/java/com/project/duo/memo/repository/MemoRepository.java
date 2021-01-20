@@ -36,4 +36,18 @@ public class MemoRepository {
 
         return true;
     }
+
+    public Memo findById(Long id) {
+        return em.find(Memo.class, id);
+    }
+
+    public boolean deleteById(Long id) {
+        try {
+            em.remove(findById(id));
+        } catch (Exception e){
+            return false;
+        }
+
+        return true;
+    }
 }

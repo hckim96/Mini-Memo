@@ -69,12 +69,12 @@ public class MemoService {
 //        String path = Paths.get("").toAbsolutePath().toString() + "/memo_txt";
         memo.setSeq(String.valueOf(memoRequest.getSeq()));
         memo.setRegdate(LocalDateTime.now());
+        save(memo);
 
         String path = Paths.get("").toAbsolutePath().toString();
         String directoryName = path.concat("/texts");
-        String fileName = memoRequest.getId() + "_" + memo.getSeq() + ".txt";
+        String fileName = memo.getId() + ".txt";
         memo.setFilePath(directoryName + "/" + fileName);
-        save(memo);
 
         File directory = new File(directoryName);
         if (! directory.exists()){
@@ -92,5 +92,13 @@ public class MemoService {
             e.printStackTrace();
             System.exit(-1);
         }
+    }
+
+    public Memo getMemoById(Long id) {
+        return memoRepository.findById(id);
+    }
+
+    public boolean deleteById(Long id) {
+        return memoRepository.deleteById(id);
     }
 }

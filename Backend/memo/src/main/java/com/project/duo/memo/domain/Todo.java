@@ -32,6 +32,8 @@ public class Todo {
     @Column(unique = true)
     private String seq;
 
+    private String deadline;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

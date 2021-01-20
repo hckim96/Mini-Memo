@@ -14,6 +14,7 @@ public class UserRepository {
 
 
     public User findById(Long id){
+        System.out.println("==================== " + id);
         return em.find(User.class, id);
     }
 
