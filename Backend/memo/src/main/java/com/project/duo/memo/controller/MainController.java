@@ -11,15 +11,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
-import java.nio.file.Paths;
-import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -27,9 +27,9 @@ import java.util.Map;
 public class MainController {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private MemoService memoService;
-    private UserService userService;
-    private TodoService todoService;
+    private final MemoService memoService;
+    private final UserService userService;
+    private final TodoService todoService;
 
     @Autowired
     public MainController(MemoService memoService, UserService userService, TodoService todoService) {
@@ -65,7 +65,7 @@ public class MainController {
         Memo memo = memoService.getMemoBySeq(seq);
 
         Map<String, Object> map = new LinkedHashMap<>();
-        map.put("memo_preview", "어쩌고 저쩌고 .  ..");
+        map.put("memo_file_path", memo.getFilePath());
         map.put("user_name", memo.getUser().getUserName());
         map.put("seq", memo.getSeq());
         return new ResponseEntity<>(map, HttpStatus.OK);
@@ -74,9 +74,7 @@ public class MainController {
 
     @PostMapping("/memos")
     public ResponseEntity<?> saveMemo(@RequestBody MemoRequest memoRequest){
-
         Map<String, Object> map = new LinkedHashMap<>();
-
         Memo memo = new Memo();
         User user = userService.getUserById(memoRequest.getId());
 
@@ -86,12 +84,26 @@ public class MainController {
         }
 
         memo.setUser(user);
-        String path = Paths.get("").toAbsolutePath().toString() + "/memo_txt";
-        memo.setSeq(String.valueOf(memoRequest.getSeq()));
-        memo.setFilePath(path + "/" + memo.getSeq() + ".txt");
-        memo.setRegdate(LocalDateTime.now());
+        memoService.save(memo, memoRequest);
 
-        memoService.save(memo);
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/memos/{seq}")
+    public ResponseEntity<?> deleteMemo(@PathVariable String seq){
+        Map<String, Object> map = new LinkedHashMap<>();
+
+        memoService.deleteBySeq(seq);
+
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+    @PutMapping("/memos")
+    public ResponseEntity<?> putMemo(@RequestBody MemoRequest memoRequest){
+        Map<String, Object> map = new LinkedHashMap<>();
+
+        Memo memo = memoService.getMemoBySeq(String.valueOf(memoRequest.getSeq()));
+        memoService.modifyMemo(memo, memoRequest.getContent());
 
         return new ResponseEntity<>(map, HttpStatus.OK);
     }

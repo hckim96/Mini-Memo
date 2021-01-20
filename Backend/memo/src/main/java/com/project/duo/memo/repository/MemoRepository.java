@@ -1,7 +1,6 @@
 package com.project.duo.memo.repository;
 
 import com.project.duo.memo.domain.Memo;
-import com.project.duo.memo.domain.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityExistsException;
@@ -26,5 +25,15 @@ public class MemoRepository {
         }
 
         return memo;
+    }
+
+    public boolean deleteBySeq(String seq) {
+        try {
+            em.remove(findBySeq(seq));
+        } catch (Exception e){
+            return false;
+        }
+
+        return true;
     }
 }
