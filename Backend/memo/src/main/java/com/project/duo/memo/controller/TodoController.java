@@ -32,7 +32,7 @@ public class TodoController {
     public void testInit(){
 
     }
-
+/*
     @GetMapping("/todos")
     public List<User> getUserList(){
         return todoService.getAllTodos();
@@ -57,4 +57,5 @@ public class TodoController {
     public ResponseEntity<?> deleteTodo(@PathVariable Long id){
         todoService.deleteTodoById(id);
     }
+*/
 }
