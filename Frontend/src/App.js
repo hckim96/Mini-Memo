@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { SigninView } from './routes/SigninView';
 import { Route, useHistory } from 'react-router-dom';
+import { SignupView } from './routes/SignupView';
+import { MemoView } from './routes/MemoView';
 
 
 function App() {
@@ -23,17 +25,21 @@ function App() {
     }
   }, [])
 
-  const signOut = () => {
-    localStorage.removeItem("LS_JWT_TOKEN");
-  }
-  
-
   return (
 
     <div className="App">
       <Route
         path='/signin'
         render={() => <SigninView/>}
+        />
+      <Route
+        path='/signup'
+        render={() => <SignupView/>}
+        />
+      <Route
+        exact
+        path='/memo'
+        render={() => <MemoView/>}
         />
     </div>
   );

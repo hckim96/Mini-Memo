@@ -13,19 +13,24 @@ export const SigninView = () => {
     });
     const history = useHistory();
     
-    // const siginIn = ({username, password}) => {
-    //     axios.post(API_URL + "signin", {
-    //         username: username,
-    //         password: password
-    //     }).then((res) => {
-    //         if (res.status == 200) {
-    //             localStorage.setItem("LS_JWT_TOKEN", res.data);
-    //             history.push("/memos");
-    //         }
-    //     }).catch((res) => {
-    //         console.log(res);
-    //     })
-    // }
+    const signinRequest = () => {
+        let success = true;
+        // axios.post(API_URL + "signin", {
+        //     username: state.username,
+        //     password: state.password,
+        // }).then(res => {
+        //     console.log(res);
+        //     // save token
+        //     // redirect to memos
+        //     history.push("/memo")
+        // }).catch(res => {
+        //     console.log(`catch ${res}`);
+        // })
+        console.log(`signinRequest {username: ${state.username}, password: ${state.password}}`)
+        if (success) {
+            history.push("/memo")
+        }
+    }
 
     return (
         <div className = "signin-container">
@@ -49,7 +54,7 @@ export const SigninView = () => {
                                 onChange = {e => setState({...state, password: e.target.value})}
                         ></input>
                     </div>
-                    <button className = "signin-form-button" onClick = {() => {history.push("/memos")}}>로그인</button>
+                    <button className = "signin-form-button" onClick = {signinRequest}>로그인</button>
                 </div>
                 <div className = "signin-form-linkToSignup">
                     <Link to = "/signup">회원가입</Link>

@@ -1,4 +1,4 @@
-.signin-container {
+.signup-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -6,7 +6,7 @@
     background-color: rgb(214, 214, 214);
 }
 
-.signin-form-container {
+.signup-form-container {
     display: flex;
     box-sizing: border-box;
     flex-direction: column;
@@ -18,23 +18,29 @@
     justify-content: space-between;
 }
 
-.signin-form {
+.signup-form-row {
+    display: flex;
+}
+.signup-form {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     flex: 2
 }
-.signin-form-username {
-    height: max-content;
-}
-.signin-form-password {
-    height: max-content;
-}
-.signin-form > button {
-    height: 3rem;
-}
 
-.signin-form > div > input {
+.signup-form-username {
+    width: 100%;
+    height: max-content;
+}
+.signup-form-password {
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+} 
+
+
+.signup-form-username > input {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -45,14 +51,51 @@
     padding: 0 1rem;
     outline: none;
     background-color: rgb(212, 212, 212);
-}
 
-.signin-form > div > label {
+}
+.signup-form-username > label {
     font-size: .7rem;
     color: gray;
 }
 
-.signin-form-button {
+.signup-form-password > input {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    height: 3rem;
+    width: 100%;
+    border: none;
+    border-radius: 1rem;
+    padding: 0 1rem;
+    outline: none;
+    background-color: rgb(212, 212, 212);
+
+}
+.signup-form-password > label {
+    font-size: .7rem;
+    color: gray;
+    
+}
+.signup-form > div > label {
+    font-size: .7rem;
+    color: gray;
+}
+
+.signup-form-checkUniqueButton {
+    background-color: rgba(102, 149, 236, 0.514);
+    color: white;
+    cursor: pointer;
+    align-self: flex-end;
+    border: none;
+    border-radius: .8rem;
+    outline: none;
+    height: 3rem;
+    width: 3rem;
+}
+.signup-form-checkUniqueButton:hover {
+    cursor: pointer;
+}
+.signup-form-button {
     background-color: rgba(102, 149, 236, 0.514);
     color: white;
     cursor: pointer;
@@ -60,15 +103,16 @@
     font-size: 1.3rem;
     border: none;
     border-radius: 1rem;
+    height: 3rem;
 }
 
-.signin-form-linkToSignup {
+.signup-form-linkToSignup {
     margin-top: 2rem;
     align-self: flex-end;
     cursor: pointer;
 }
 
-.signin-form-linkToSignup > * {
+.signup-form-linkToSignup > * {
     text-decoration: none;
     color: gray;
 }
