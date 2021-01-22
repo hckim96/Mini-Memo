@@ -1,0 +1,29 @@
+.memoViewTabBar-container {
+    background-color: black;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    color: white;
+    align-items: center;
+    padding: 1rem .5rem;
+}
+
+.memoViewTabBar-tab {
+    display: flex;
+    align-items: center;
+    margin-bottom: .5rem;
+    opacity: 1;
+}
+
+.memoViewTabBar-tab:hover {
+    opacity: .7;
+    cursor: pointer;
+}
+
+.memoViewTabBar-header {
+    
+}
+.memoViewTabBar-footer {
+}
