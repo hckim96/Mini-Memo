@@ -5,6 +5,8 @@ import com.project.duo.memo.domain.UserRequest;
 import com.project.duo.memo.service.MemoService;
 import com.project.duo.memo.service.TodoService;
 import com.project.duo.memo.service.UserService;
+import com.project.duo.memo.util.JwtAuthenticationTokenProvider;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +26,13 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 public class UserController {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final UserService userService;
+    private final JwtAuthenticationTokenProvider tokenProvider;
 
-    @Autowired
-    public UserController(MemoService memoService, UserService userService, TodoService todoService) {
-        this.userService = userService;
-    }
 
     @PostConstruct
     public void testInit(){
@@ -43,21 +43,39 @@ public class UserController {
     @PostMapping("/users/signin")
     public ResponseEntity<?> signin(@RequestBody UserRequest userRequest){
         Map<String, Object> map = new LinkedHashMap<>();
+        boolean result;
         logger.info(userRequest.getUsername());
         logger.info(userRequest.getPassword());
 
         User user = new User(userRequest.getUsername(), userRequest.getPassword());
+        result = userService.signInUser(user);
+        map.put("result", result);
 
-        if(userService.signInUser(user)){
-            map.put("token", "test token");
-            map.put("result", true);
-        }
-        else{
-            map.put("result", false);
+        if(result) {
+            map.put("token", tokenProvider.issue(user.getId()).getToken());
         }
 
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
+
+    @PostMapping("/users/validateUsername")
+    public ResponseEntity<?> validateUsername(@RequestBody UserRequest userRequest){
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("result", userService.checkUserNameDuplicated(userRequest.getUsername()));
+
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+    @PostMapping("/users/signup")
+    public ResponseEntity<?> signUp(@RequestBody UserRequest userRequest){
+        Map<String, Object> map = new LinkedHashMap<>();
+        User user = new User(userRequest.getUsername(), userRequest.getPassword());
+
+        map.put("result", userService.signUpUser(user));
+
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
 /*
 
 

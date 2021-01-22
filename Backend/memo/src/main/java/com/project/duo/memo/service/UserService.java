@@ -12,8 +12,8 @@ import javax.transaction.Transactional;
 @Transactional
 public class UserService {
 
-    private UserRepository userRepository;
-    private PasswordEncoder encoder;
+    private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
 
     @Autowired
     public UserService(UserRepository userRepository, PasswordEncoder encoder) {
@@ -32,10 +32,18 @@ public class UserService {
     public boolean signInUser(User user) {
         User byUsername = userRepository.findByUsername(user.getUserName());
 
-        if(byUsername == null || !byUsername.getUserPassword().equals(/*encoder.encode*/(user.getUserPassword()))){
-            return false;
-        }
+        return byUsername != null && byUsername.getUserPassword().equals(/*encoder.encode*/(user.getUserPassword()));
+    }
 
-        return true;
+    public boolean checkUserNameDuplicated(String username) {
+        return userRepository.findByUsername(username) == null;
+    }
+
+    public boolean signUpUser(User user) {
+        return userRepository.save(user) != null;
+    }
+
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 }
