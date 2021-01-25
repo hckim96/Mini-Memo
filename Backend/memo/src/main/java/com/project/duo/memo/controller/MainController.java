@@ -3,10 +3,12 @@ package com.project.duo.memo.controller;
 import com.project.duo.memo.domain.ErrorResponse;
 import com.project.duo.memo.domain.Memo;
 import com.project.duo.memo.domain.MemoRequest;
+import com.project.duo.memo.domain.Todo;
 import com.project.duo.memo.domain.User;
 import com.project.duo.memo.service.MemoService;
 import com.project.duo.memo.service.TodoService;
 import com.project.duo.memo.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,17 +28,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 public class MainController {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final UserService userService;
     private final MemoService memoService;
-
-    @Autowired
-    public MainController(MemoService memoService, UserService userService) {
-        this.memoService = memoService;
-        this.userService = userService;
-    }
+    private final TodoService todoService;
 
     @PostConstruct
     public void testInit(){
@@ -52,12 +50,20 @@ public class MainController {
         Memo memo3 = new Memo("메모 3", "1");
         memo3.setUser(user2);
 
+        Todo todo1 = new Todo("밥먹기", "34");
+        Todo todo2 = new Todo("청소", "32");
+
+
         userService.save(user1);
         userService.save(user2);
 
         memoService.save(memo1);
         memoService.save(memo2);
         memoService.save(memo3);
+
+        todoService.save(todo1);
+        todoService.save(todo2);
+
     }
 
 }

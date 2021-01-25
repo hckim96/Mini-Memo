@@ -52,7 +52,7 @@ public class UserController {
         map.put("result", result);
 
         if(result) {
-            map.put("token", tokenProvider.issue(user.getId()).getToken());
+            map.put("token", tokenProvider. issue(user.getId()).getToken());
         }
 
         return new ResponseEntity<>(map, HttpStatus.OK);
@@ -75,33 +75,4 @@ public class UserController {
 
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
-
-/*
-
-
-    @GetMapping("/users")
-    public List<User> getUserList(){
-        return userService.getAllUsers();
-    }
-
-    @GetMapping("/users/{id}")
-    public User getUser(@PathVariable Long id){
-        return userService.getUserById(id);
-    }
-
-    @PostMapping("/users")
-    public ResponseEntity<?> postUser(@RequestBody UserRequest userRequest){
-
-    }
-
-    @PutMapping("/users")
-    public ResponseEntity<?> putUser(@RequestBody UserRequest userRequest){
-
-    }
-
-    @DeleteMapping("/users/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id){
-        userService.deleteUserById(id);
-    }
- */
 }

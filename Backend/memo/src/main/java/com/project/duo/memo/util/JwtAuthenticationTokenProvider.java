@@ -10,6 +10,10 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +26,7 @@ import java.util.Date;
 public class JwtAuthenticationTokenProvider {
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationTokenProvider.class);
 
-    // 보통 설정파일에 관리하고 `@Value` 등으로 주입받아 사용하는 것을 추천
-    private static final String SECRET_KEY = "SOME_SECRET_KEY";
+    private static final String SECRET_KEY = "SECRET";
     private static final long EXPIRATION_MS = 1000 * 60 * 60 * 24;
 
     public String parseTokenString(HttpServletRequest request) {

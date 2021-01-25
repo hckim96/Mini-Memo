@@ -1,7 +1,9 @@
 package com.project.duo.memo.controller;
 
+import com.project.duo.memo.domain.Todo;
 import com.project.duo.memo.domain.User;
 import com.project.duo.memo.service.TodoService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,31 +20,26 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class TodoController {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final TodoService todoService;
 
-    @Autowired
-    public TodoController(TodoService todoService) {
-        this.todoService = todoService;
-    }
-
-    @PostConstruct
-    public void testInit(){
-
-    }
-/*
     @GetMapping("/todos")
-    public List<User> getUserList(){
+    public List<Todo> getUserList(){
         return todoService.getAllTodos();
     }
 
     @GetMapping("/todos/{id}")
-    public User getUser(@PathVariable Long id){
+    public Todo getUser(@PathVariable Long id){
         return todoService.getTodoById(id);
     }
 
+
+
+
+/*
     @PostMapping("/todos")
     public ResponseEntity<?> postTodo(@RequestBody TodoRequest todoRequest){
 
